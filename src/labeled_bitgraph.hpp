@@ -5,12 +5,17 @@
 
 enum Label {Zero, One};
 
+// Implementation of a graph in which edges are labeled with elements
+// from the enum 'Label'. Internally it holds a separate BitGraph fro
+// each label.
 class LabeledBitGraph
 {
     public:
         LabeledBitGraph(Size s) :
             zero_graph(s),
             one_graph(s) {}
+
+        LabeledBitGraph(Size s, unsigned long long bit_code) : 
 
         LabeledBitGraph(const BitGraph &zg, const BitGraph &og) :
             zero_graph(zg),
