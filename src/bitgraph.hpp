@@ -87,13 +87,20 @@ const {
         }
 };
 
-//
 inline bool operator==(const BitGraph &bg1, const BitGraph &bg2) {
     return bg1.bits == bg2.bits;
 }
 
+// This function prints the graph to a stream. It provides a bit more
+// customization than the shift operator.
+void stream_graph(std::ostream& os, const char* relation_symbol, const BitGraph& bg);
+
 // This function provides a neat string representation of the relation.
-std::ostream& operator<<(std::ostream& os, const BitGraph& bg);
+inline std::ostream& operator<<(std::ostream& os, const BitGraph& bg)
+{
+    stream_graph(os, "=>", bg);
+    return os;
+}
 
 // Composition of two relations. For efficiency reasons it is assumed
 // that the complier si smart enough not to copy the return value.

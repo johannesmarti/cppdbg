@@ -1,6 +1,8 @@
 #ifndef LABELED_BITGRAPH_HPP_
 #define LABELED_BITGRAPH_HPP_
 
+#include <iostream>
+
 #include "bitgraph.hpp"
 #include "bit_tricks.hpp"
 
@@ -85,5 +87,12 @@ class LabeledBitGraph
         BitGraph zero_graph;
         BitGraph one_graph;
 };
+
+inline bool operator==(const LabeledBitGraph &lbg1, const LabeledBitGraph &lbg2) {
+    return (lbg1.graph_of_label(Zero) == lbg2.graph_of_label(Zero)) &&
+           (lbg1.graph_of_label(One ) == lbg2.graph_of_label(One ));
+}
+
+std::ostream& operator<<(std::ostream& os, const LabeledBitGraph& lbg);
 
 #endif // LABELED_BITGRAPH_HPP_

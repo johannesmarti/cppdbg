@@ -2,11 +2,12 @@
 
 using namespace std;
 
-ostream& operator<<(ostream& os, const BitGraph& bg)
+void stream_graph(std::ostream& os, const char* relation_symbol,
+                  const BitGraph& bg)
 {
     Size s = bg.size();
     for (Node v = 0; v < s; v++) {
-        os << v << " => ";
+        os << v << ' ' << relation_symbol << ' ';
         Node u = 0;
         while (u < s) {
             if (bg.has_edge(v,u)) {
@@ -24,8 +25,6 @@ ostream& operator<<(ostream& os, const BitGraph& bg)
         }
         os << '\n';
     }
-
-    return os;
 }
 
 BitGraph diagonal(Size s)

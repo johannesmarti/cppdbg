@@ -16,10 +16,8 @@ int main()
     a.add_edge(One, 1, 2);
     a.add_edge(One, 2, 0);
 
-    cout << a.graph_of_label(Zero) << endl;
-    cout << a.graph_of_label(One) << '\n' << endl;
+    cout << a << endl;
+    cout << b << endl;
 
-    cout << b.graph_of_label(Zero) << endl;
-    cout << b.graph_of_label(One) << endl;
     return 0;
 }
