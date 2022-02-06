@@ -5,17 +5,14 @@
 
 // Should return the number of bits in a integer type.
 template <typename T>
-inline size_t num_bits()
-{
-    return sizeof (T) * (CHAR_BIT);
-}
+inline size_t num_bits = sizeof(T) * (CHAR_BIT);
 
 // This function should return the member of T, where the first
 // 'num_one' bits are set to one.
 template <typename T = unsigned>
 inline T ones(unsigned num_ones)
 {
-    assert (num_ones <= num_bits<T>());
+    assert (num_ones <= num_bits<T>);
 
     // The implementation here is cautions!
     T res = 0;
@@ -26,7 +23,7 @@ inline T ones(unsigned num_ones)
 
     // Could maybe also just use the following:
     /*
-    return std::numeric_limits<T>::max() >> (num_bits<T>() - num_ones);
+    return std::numeric_limits<T>::max() >> (num_bits<T> - num_ones);
     */
     // But this relies on the fact that max() is indeed the value of T
     // where all bits are set to one. This seems too risky.

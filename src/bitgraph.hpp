@@ -64,6 +64,12 @@ class BitGraph
             bits[offset_of_edge(v,u)] = 0;
         }
 
+        unsigned long to_ulong() const {
+            Size s = size();
+            assert(num_bits<unsigned long> >= s*s);
+            return bits.to_ulong();
+        }
+
         friend bool operator==(const BitGraph &bg1, const BitGraph &bg2);
     private:
         Size num_nodes; // the number of nodes in the graph

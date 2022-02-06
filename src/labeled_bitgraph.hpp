@@ -20,20 +20,20 @@ class LabeledBitGraph
             zero_graph(s),
             one_graph(s) {}
 
-        // This constructor takes a bit pattern 'bit_code' that encodes
+        // This constructor takes a bit pattern 'bitcode' that encodes
         // the graph as follows: The edge with label lab from v to w
         // exists iff the bit at position
         //     'b * (size * size) + v * size + w'
         // is set, where 'b' is 1 if lab is One and 'b' is 0 if lab is
         // Zero.
         template <typename T>
-        LabeledBitGraph(Size size, T bit_code) : 
-            zero_graph(size, bit_code & ones<T>(size*size)),
-            one_graph(size, bit_code >> size*size)
+        LabeledBitGraph(Size size, T bitcode) : 
+            zero_graph(size, bitcode & ones<T>(size*size)),
+            one_graph(size, bitcode >> size*size)
         {
             // Check that no bits are set that would not have a meaning
             // in the encoding.
-            assert(subset<T>(bit_code,ones<T>(2*size*size)));
+            assert(subset<T>(bitcode,ones<T>(2*size*size)));
         }
 
         LabeledBitGraph(const BitGraph &zg, const BitGraph &og) :
@@ -77,6 +77,23 @@ class LabeledBitGraph
 
         void remove_edge(Label l, Node v, Node u) {
             graph_of_label(l).remove_edge(v, u);
+        }
+
+        // Transforms the labeled graph into a bitset description inside
+        // an unsigned long int. It assumes that the '2*s*s' where 's =
+        // this->size()' is less or equal to the number of bits in an
+        // unsigned long. The coding is the same as the one used by the
+        // constructor LabeledBitgraph(Size ssize, T bitcode).
+        // Composing in either way with this constuctor yields the the
+        // identity. For instance we have that for any not too large
+        // LabeledBitGraph 'lbg' it holds that 'lbg ==
+        // LabeledBitGraph(lbg.size(), lbg.to_bitcode())'.
+        unsigned long to_bitcode() const {
+            Size s = size();
+            Size ssq = s*s;
+            assert(2*ssq <= num_bits<unsigned long>);
+            return graph_of_label(Zero).to_ulong() |
+                  (graph_of_label(One).to_ulong() << ssq);
         }
 
     private:
