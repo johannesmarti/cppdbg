@@ -25,9 +25,12 @@ endif()
 
 enable_testing()
 
-add_executable(bitgraph_test test/bitgraph_test.cpp src/bitgraph.cpp)
+add_executable(cppdbg_test
+  test/main.cpp
+  test/bitgraph_test.cpp src/bitgraph.cpp
+  test/bit_tricks_test.cpp)
 
-target_link_libraries(bitgraph_test ${Boost_UNIT_TEST_FRAMEWORK_LIBRARY})
+target_link_libraries(cppdbg_test ${Boost_UNIT_TEST_FRAMEWORK_LIBRARY})
 
-add_test(NAME bitgraph_test COMMAND bitgraph_test)
+add_test(NAME cppdbg_test COMMAND cppdbg_test)
 

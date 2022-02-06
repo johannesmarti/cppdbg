@@ -4,6 +4,8 @@
 #include <iostream>
 #include <boost/dynamic_bitset.hpp>
 
+#include "bit_tricks.hpp"
+
 typedef unsigned int Node;
 typedef Node Size;
 
@@ -21,7 +23,10 @@ class BitGraph
         template <typename T>
         BitGraph(Size s, T bits_as_int) :
             num_nodes(s),
-            bits(s*s, bits_as_int) { }
+            bits(s*s, bits_as_int)
+        {
+            assert(subset<T>(bits_as_int,ones<T>(s*s)));
+        }
 /*
         // copy constructor with logging
         BitGraph(const BitGraph& bg) :

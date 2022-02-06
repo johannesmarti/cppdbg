@@ -12,7 +12,7 @@ inline size_t num_bits()
 
 // This function should return the member of T, where the first
 // 'num_one' bits are set to one.
-template <typename T>
+template <typename T = unsigned>
 inline T ones(unsigned num_ones)
 {
     assert (num_ones <= num_bits<T>());
@@ -32,10 +32,10 @@ inline T ones(unsigned num_ones)
     // where all bits are set to one. This seems too risky.
 }
 
-template <typename T>
+template <typename T = unsigned>
 inline bool subset(T a, T b)
 {
-    return a & (~b) == 0;
+    return (a & (~b)) == 0;
 }
 
 #endif // BIT_TRICKS_HPP_
