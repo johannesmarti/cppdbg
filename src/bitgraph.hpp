@@ -14,7 +14,12 @@ typedef Node Size;
 class BitGraph
 {
     public:
-        BitGraph(Size s, unsigned int bits_as_int = 0) :
+        BitGraph(Size s) :
+            num_nodes(s),
+            bits(s*s) { }
+
+        template <typename T>
+        BitGraph(Size s, T bits_as_int) :
             num_nodes(s),
             bits(s*s, bits_as_int) { }
 /*

@@ -1,4 +1,7 @@
+# build directory
 build/
+# don't show vim's swap files
+*.swp
 
 # Prerequisites
 *.d

@@ -2,12 +2,15 @@
 #define LABELED_BITGRAPH_HPP_
 
 #include "bitgraph.hpp"
+#include "bit_tricks.hpp"
 
 enum Label {Zero, One};
 
 // Implementation of a graph in which edges are labeled with elements
-// from the enum 'Label'. Internally it holds a separate BitGraph fro
-// each label.
+// from the enum 'Label'. Internally it holds a separate BitGraph for
+// each label. As with BitGraph the nodes of a a LabeledBitGraph 'lbg'
+// are always elements of type Node in the range from 0 to 'lbg.size() -
+// 1'.
 class LabeledBitGraph
 {
     public:
@@ -15,7 +18,21 @@ class LabeledBitGraph
             zero_graph(s),
             one_graph(s) {}
 
-        LabeledBitGraph(Size s, unsigned long long bit_code) : 
+        // This constructor takes a bit pattern 'bit_code' that encodes
+        // the graph as follows: The edge with label lab from v to w
+        // exists iff the bit at position
+        //     'b * (size * size) + v * size + w'
+        // is set, where 'b' is 1 if lab is One and 'b' is 0 if lab is
+        // Zero.
+        template <typename T>
+        LabeledBitGraph(Size size, T bit_code) : 
+            zero_graph(size, bit_code & ones<T>(size*size)),
+            one_graph(size, bit_code >> size*size)
+        {
+            // Check that no bits are set that would not have a meaning
+            // in the encoding.
+            assert(subset<T>(bit_code,ones<T>(2*size*size)));
+        }
 
         LabeledBitGraph(const BitGraph &zg, const BitGraph &og) :
             zero_graph(zg),
