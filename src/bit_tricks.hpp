@@ -5,7 +5,9 @@
 
 // Should return the number of bits in a integer type.
 template <typename T>
-inline size_t num_bits = sizeof(T) * (CHAR_BIT);
+inline size_t num_bits = std::numeric_limits<T>::digits;
+// This is a more pedestian implementation
+//inline size_t num_bits = sizeof(T) * (CHAR_BIT);
 
 // This function should return the member of T, where the first
 // 'num_one' bits are set to one.
