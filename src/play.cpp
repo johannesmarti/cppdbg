@@ -13,15 +13,26 @@ int main()
     
     cout << q << endl;
 
+    cout << q.is_total() << endl;
     cout << q.covers(p) << endl;
 
     p[0] = 1;
 
-    cout << q.covers(p) << endl;
+    cout << q.is_total() << endl;
 
-    q.add(p);
+    Set big(4, 0b0111);
+    q.add(big);
 
     cout << q << endl;
+
+    cout << q.is_total() << endl;
+
+    Set total(4,0b1111);
+    q.add(total);
+
+    cout << q << endl;
+    cout << q.is_total() << endl;
+
 
     return 0;
 }

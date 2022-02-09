@@ -11,6 +11,7 @@
 
 typedef boost::dynamic_bitset<> Set;
 
+/*
 // Make bitsets hashable. This is copy pasted from stackoverflow.
 namespace std {
 
@@ -25,6 +26,7 @@ namespace std {
         }
     };
 }
+*/
 
 inline Set singleton(unsigned dom_size, unsigned elem) {
     assert (elem < dom_size);
@@ -45,7 +47,7 @@ public:
     // implies because of downwards closure that every subset of the
     // domain is covered.
     bool is_total() const {
-        return antichain.count(total_proposition());
+        return antichain.size() == 1;
     }
 
     bool covers(Set& proposition) const {
@@ -81,7 +83,7 @@ private:
     }
     bool check_coherence() const;
     bool covers_whole_domain() const;
-    //bool is_real_antichain() const;
+    bool is_antichain() const;
 };
 
 std::ostream& operator<<(std::ostream& os, const Question& q);
