@@ -26,7 +26,7 @@ namespace std {
     };
 }
 
-Set singleton(unsigned dom_size, unsigned elem) {
+inline Set singleton(unsigned dom_size, unsigned elem) {
     assert (elem < dom_size);
     Set s(dom_size);
     s[elem] = 1;
@@ -39,41 +39,51 @@ Set singleton(unsigned dom_size, unsigned elem) {
 class Question
 {
 public:
-    Question(unsigned dom_size) :
-        antichain(),
-        domain_size(dom_size) {
-            antichain.reserve(dom_size);
-            for (unsigned i = 0; i < dom_size; i++) {
-                antichain.insert(singleton(dom_size, i));
-            }
-        }
-
-    bool covers(Set& proposition) const {
-        /*return std::any_of(antichain.cbegin(), antichain.cend(),
-                           [proposition](Set a){ return
-proposition.is_subset_of(a)); })*/
-        for (auto const& e : antichain) {
-            if (proposition.is_subset_of(e))
-                return true;
-        }
-        return false;
-    }
+    Question(unsigned dom_size);
 
     // Checks whether the domain is a member of the family of sets. This
     // implies because of downwards closure that every subset of the
     // domain is covered.
     bool is_total() const {
-        Set dom(domain_size);
-        dom.set(); // set all bits to 1
-        return antichain.count(dom);
+        return antichain.count(total_proposition());
     }
 
+    bool covers(Set& proposition) const {
+        assert (proposition.size() == domain_size);
+        return std::any_of(antichain.cbegin(), antichain.cend(),
+                            [&proposition](Set a) {
+                                return proposition.is_subset_of(a);
+                            });
+        /*
+        for (auto const& e : antichain) {
+            if (proposition.is_subset_of(e))
+                return true;
+        }
+        return false;
+        */  
+    }
+
+    bool add(Set& proposition);
+    void add_uncovered(Set& proposition);
+
+    friend std::ostream& operator<<(std::ostream& os, const Question& q);
 
 private:
     std::unordered_set <Set> antichain;
     unsigned domain_size;
-    //bool covers_whole_domain() const;
+    Set empty_proposition() const {
+        return Set(domain_size);
+    }
+    Set total_proposition() const {
+        Set dom = empty_proposition();
+        dom.set();
+        return dom;
+    }
+    bool check_coherence() const;
+    bool covers_whole_domain() const;
     //bool is_real_antichain() const;
 };
+
+std::ostream& operator<<(std::ostream& os, const Question& q);
 
 #endif // QUESTION_HPP_

@@ -1,24 +1,27 @@
 #include <iostream>
 
-#include "labeled_bitgraph.hpp"
+#include "question.hpp"
 
 using namespace std;
 
 int main()
 {
-    LabeledBitGraph a(3);
-    LabeledBitGraph b(3, 2);
+    Question q(4);
 
-    a.add_edge(Zero, 0, 0);
-    a.add_edge(Zero, 0, 1);
-    a.add_edge(Zero, 0, 2);
-    a.add_edge(One, 1, 1);
-    a.add_edge(One, 1, 2);
-    a.add_edge(One, 2, 0);
+    Set p(4);
+    p[2] = 1;
+    
+    cout << q << endl;
 
-    cout << a.to_bitcode() << endl;
+    cout << q.covers(p) << endl;
 
-    cout << a << endl;
+    p[0] = 1;
+
+    cout << q.covers(p) << endl;
+
+    q.add(p);
+
+    cout << q << endl;
 
     return 0;
 }
