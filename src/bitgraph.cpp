@@ -1,3 +1,5 @@
+#include <boost/dynamic_bitset.hpp>
+
 #include "bitgraph.hpp"
 
 using namespace std;
@@ -54,3 +56,14 @@ BitGraph compose(const BitGraph& a, const BitGraph& b)
     return result;
 }
 
+boost::dynamic_bitset<> BitGraph::image(boost::dynamic_bitset<> set)
+{
+    Size s = size();
+    assert(set.size() == s);
+    boost::dynamic_bitset<> result(s);
+    for (Node i = 0; i < s; i++) {
+        if (set[i])
+            result |= successors_of(i);
+    }
+    return result;
+}

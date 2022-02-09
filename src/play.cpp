@@ -10,6 +10,8 @@ int main()
 
     Set p(4);
     p[2] = 1;
+
+    cout << sizeof(Set) << endl;
     
     cout << q << endl;
 

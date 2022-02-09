@@ -15,82 +15,94 @@ typedef Node Size;
 // function as indices into the matrix.
 class BitGraph
 {
-    public:
-        BitGraph(Size s) :
-            num_nodes(s),
-            bits(s*s) { }
+public:
+    BitGraph(Size s) :
+        num_nodes(s),
+        bits(s*s) { }
 
-        template <typename T>
-        BitGraph(Size s, T bits_as_int) :
-            num_nodes(s),
-            bits(s*s, bits_as_int)
-        {
-            assert(subset<T>(bits_as_int,ones<T>(s*s)));
-        }
+    template <typename T>
+    BitGraph(Size s, T bits_as_int) :
+        num_nodes(s),
+        bits(s*s, bits_as_int)
+    {
+        assert(subset<T>(bits_as_int,ones<T>(s*s)));
+    }
+
 /*
-        // copy constructor with logging
-        BitGraph(const BitGraph& bg) :
-            num_nodes(bg.num_nodes),
-            bits(bg.bits) {
-            std::cerr << "executing copy constructor of BitGraph\n";
-        }
+    // copy constructor with logging
+    BitGraph(const BitGraph& bg) :
+        num_nodes(bg.num_nodes),
+        bits(bg.bits) {
+        std::cerr << "executing copy constructor of BitGraph\n";
+    }
 
-        // move constructor with logging
-        BitGraph(BitGraph&& bg) :
-            num_nodes(bg.num_nodes),
-            bits(bg.bits) {
-            std::cerr << "executing move constructor of BitGraph\n";
-        }
+    // move constructor with logging
+    BitGraph(BitGraph&& bg) :
+        num_nodes(bg.num_nodes),
+        bits(bg.bits) {
+        std::cerr << "executing move constructor of BitGraph\n";
+    }
 
-        // destructor with logging
-        ~BitGraph() {
-            std::cerr << "executing destructor of BitGraph\n";
-        }
+    // destructor with logging
+    ~BitGraph() {
+        std::cerr << "executing destructor of BitGraph\n";
+    }
 */
 
-        Size size() const {
-            return num_nodes;
-        }
+    Size size() const {
+        return num_nodes;
+    }
 
-        bool has_edge(Node v, Node u) const {
-            return bits[offset_of_edge(v,u)];
-        }
+    bool has_edge(Node v, Node u) const {
+        return bits[offset_of_edge(v,u)];
+    }
 
-        void add_edge(Node v, Node u) {
-            bits[offset_of_edge(v,u)] = 1;
-        }
+    void add_edge(Node v, Node u) {
+        bits[offset_of_edge(v,u)] = 1;
+    }
 
-        void remove_edge(Node v, Node u) {
-            bits[offset_of_edge(v,u)] = 0;
-        }
+    void remove_edge(Node v, Node u) {
+        bits[offset_of_edge(v,u)] = 0;
+    }
 
-        unsigned long to_ulong() const {
-            Size s = size();
-            assert(num_bits<unsigned long> >= s*s);
-            return bits.to_ulong();
-        }
+    unsigned long to_ulong() const {
+        Size s = size();
+        assert(num_bits<unsigned long> >= s*s);
+        return bits.to_ulong();
+    }
 
-        friend bool operator==(const BitGraph &bg1, const BitGraph &bg2);
-    private:
-        Size num_nodes; // the number of nodes in the graph
-        // 'bits' is the bitset that represent the adjacency matrix. It
-        // is assumed to have a size that is equal to 'num_nodes * num_nodes'.
-        boost::dynamic_bitset<> bits;
+    boost::dynamic_bitset<> successors_of(Node i) {
+        // TODO: There should be a better way of doing this! The problem
+        // now is that we first shift, which creates a copy of a large
+        // size and then immediately resize!
+        assert(this->contains_node(i));
+        boost::dynamic_bitset<> res = bits >> (i * num_nodes);
+        res.resize(num_nodes);
+        return res;
+    }
 
-        bool contains_node(Node v) const {
-            return v < num_nodes;
-        }
+    boost::dynamic_bitset<> image(boost::dynamic_bitset<> set);
 
-        // This function computes the position of the bit corresponding
-        // to the edge (v,u) in the bitset.
-        boost::dynamic_bitset<>::size_type offset_of_edge(Node v, Node u)
-const {
-            // We perform boundchecking just here, to not have to repeat
-            // it in all other methods that index the bitset.
-            assert(this->contains_node(v));
-            assert(this->contains_node(u));
-            return v * num_nodes + u;
-        }
+    friend bool operator==(const BitGraph &bg1, const BitGraph &bg2);
+private:
+    Size num_nodes; // the number of nodes in the graph
+    // 'bits' is the bitset that represent the adjacency matrix. It
+    // is assumed to have a size that is equal to 'num_nodes * num_nodes'.
+    boost::dynamic_bitset<> bits;
+
+    bool contains_node(Node v) const {
+        return v < num_nodes;
+    }
+
+    // This function computes the position of the bit corresponding
+    // to the edge (v,u) in the bitset.
+    boost::dynamic_bitset<>::size_type offset_of_edge(Node v, Node u) const {
+        // We perform boundchecking just here, to not have to repeat
+        // it in all other methods that index the bitset.
+        assert(this->contains_node(v));
+        assert(this->contains_node(u));
+        return v * num_nodes + u;
+    }
 };
 
 inline bool operator==(const BitGraph &bg1, const BitGraph &bg2) {

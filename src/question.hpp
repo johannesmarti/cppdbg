@@ -5,7 +5,6 @@
 #include <unordered_set>
 
 #include <boost/dynamic_bitset.hpp>
-#include <boost/functional/hash.hpp>
 
 #include "bit_tricks.hpp"
 
@@ -31,6 +30,10 @@ public:
     // domain is covered.
     bool is_total() const {
         return antichain.size() == 1;
+    }
+
+    std::unordered_set<Set>& maximal_propositions() {
+        return antichain;
     }
 
     bool covers(Set& proposition) const {
@@ -63,7 +66,7 @@ public:
     }
 
 private:
-    std::unordered_set <Set> antichain;
+    std::unordered_set<Set> antichain;
     unsigned domain_size;
     bool check_coherence() const;
     bool covers_whole_domain() const;
