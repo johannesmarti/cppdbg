@@ -11,23 +11,6 @@
 
 typedef boost::dynamic_bitset<> Set;
 
-/*
-// Make bitsets hashable. This is copy pasted from stackoverflow.
-namespace std {
-
-    template <typename Block, typename Alloc> struct hash<boost::dynamic_bitset<Block, Alloc> > {
-        size_t operator()(boost::dynamic_bitset<Block, Alloc> const& bs) const {
-            size_t seed = boost::hash_value(bs.size());
-
-            std::vector<Block> blocks(bs.num_blocks());
-            boost::hash_range(seed, blocks.begin(), blocks.end());
-
-            return seed;
-        }
-    };
-}
-*/
-
 inline Set singleton(unsigned dom_size, unsigned elem) {
     assert (elem < dom_size);
     Set s(dom_size);
@@ -70,9 +53,6 @@ public:
 
     friend std::ostream& operator<<(std::ostream& os, const Question& q);
 
-private:
-    std::unordered_set <Set> antichain;
-    unsigned domain_size;
     Set empty_proposition() const {
         return Set(domain_size);
     }
@@ -81,6 +61,10 @@ private:
         dom.set();
         return dom;
     }
+
+private:
+    std::unordered_set <Set> antichain;
+    unsigned domain_size;
     bool check_coherence() const;
     bool covers_whole_domain() const;
     bool is_antichain() const;

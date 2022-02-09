@@ -29,7 +29,9 @@ add_executable(cppdbg_test
   test/main.cpp
   test/bitgraph_test.cpp src/bitgraph.cpp
   test/bit_tricks_test.cpp
-  test/labeled_bitgraph_test.cpp src/labeled_bitgraph.cpp)
+  test/labeled_bitgraph_test.cpp src/labeled_bitgraph.cpp
+  test/question_test.cpp src/question.cpp
+)
 
 target_link_libraries(cppdbg_test ${Boost_UNIT_TEST_FRAMEWORK_LIBRARY})
 
