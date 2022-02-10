@@ -1,40 +1,18 @@
 #include <iostream>
 
+#include <boost/dynamic_bitset.hpp>
+
 #include "question.hpp"
+#include "bitgraph.hpp"
 
 using namespace std;
 
 int main()
 {
-    Question q(4);
+    BitGraph  b(4, 0b0010000010101000);
+    boost::dynamic_bitset<> s01(4, 0b11);
 
-    Set p(4);
-    p[2] = 1;
-
-    cout << sizeof(Set) << endl;
-    
-    cout << q << endl;
-
-    cout << q.is_total() << endl;
-    cout << q.covers(p) << endl;
-
-    p[0] = 1;
-
-    cout << q.is_total() << endl;
-
-    Set big(4, 0b0111);
-    q.add(big);
-
-    cout << q << endl;
-
-    cout << q.is_total() << endl;
-
-    Set total(4,0b1111);
-    q.add(total);
-
-    cout << q << endl;
-    cout << q.is_total() << endl;
-
+    cout << b.image(s01) << endl;
 
     return 0;
 }

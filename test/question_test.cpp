@@ -30,6 +30,10 @@ BOOST_AUTO_TEST_CASE(question_scenario)
 
     q.add_uncovered(p12);
     BOOST_CHECK(q.covers(p12));
+    {
+        Set other(4, 0b0110);
+        BOOST_CHECK(! q.add(other));
+    }
     BOOST_CHECK(q.covers(p23));
     BOOST_CHECK(q.covers(p1));
     BOOST_CHECK(! q.covers(p01));
