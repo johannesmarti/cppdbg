@@ -11,7 +11,7 @@ const size_t num_bits = std::numeric_limits<T>::digits;
 
 // This function should return the member of T, where the first
 // 'num_one' bits are set to one.
-template <typename T = unsigned>
+template <typename T = unsigned long>
 inline T ones(unsigned num_ones)
 {
     assert (num_ones <= num_bits<T>);

@@ -56,7 +56,7 @@ BitGraph compose(const BitGraph& a, const BitGraph& b)
     return result;
 }
 
-boost::dynamic_bitset<> BitGraph::image(boost::dynamic_bitset<> set)
+boost::dynamic_bitset<> BitGraph::image(const boost::dynamic_bitset<> set) const
 {
     Size s = size();
     assert(set.size() == s);

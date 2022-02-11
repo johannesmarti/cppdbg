@@ -3,6 +3,6 @@
 
 #include "labeled_bitgraph.hpp"
 
-bool is_construction_deterministic(LabeledBitGraph&);
+bool is_construction_deterministic(const LabeledBitGraph&);
 
 #endif // CONSTRUCTION_DETERMINISM_HPP_

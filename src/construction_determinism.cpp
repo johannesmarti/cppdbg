@@ -4,7 +4,7 @@
 #include "labeled_bitgraph.hpp"
 #include "question.hpp"
 
-std::unique_ptr<Question> deterministic_question(LabeledBitGraph& lbg)
+std::unique_ptr<Question> deterministic_question(const LabeledBitGraph& lbg)
 {
     std::unique_ptr<Question> q = std::make_unique<Question>(lbg.size());
     
@@ -23,7 +23,7 @@ std::unique_ptr<Question> deterministic_question(LabeledBitGraph& lbg)
     return q;
 }
 
-bool is_construction_deterministic(LabeledBitGraph& lbg)
+bool is_construction_deterministic(const LabeledBitGraph& lbg)
 {
     return !deterministic_question(lbg)->is_total();
 }

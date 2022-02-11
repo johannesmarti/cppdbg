@@ -71,7 +71,7 @@ public:
         return bits.to_ulong();
     }
 
-    boost::dynamic_bitset<> successors_of(Node i) {
+    boost::dynamic_bitset<> successors_of(Node i) const {
         // TODO: There should be a better way of doing this! The problem
         // now is that we first shift, which creates a copy of a large
         // size and then immediately resize!
@@ -81,7 +81,7 @@ public:
         return res;
     }
 
-    boost::dynamic_bitset<> image(boost::dynamic_bitset<> set);
+    boost::dynamic_bitset<> image(const boost::dynamic_bitset<> set) const;
 
     friend bool operator==(const BitGraph &bg1, const BitGraph &bg2);
 private:
