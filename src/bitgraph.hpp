@@ -71,6 +71,7 @@ public:
         return bits.to_ulong();
     }
 
+    // Returns a bitset that encodes the successor of the node 'v'.
     boost::dynamic_bitset<> successors_of(Node v) const {
         assert(this->contains_node(v));
 
@@ -91,7 +92,10 @@ public:
         return res;
     }
 
-    boost::dynamic_bitset<> image(const boost::dynamic_bitset<> set) const;
+    // Returns a bitset that encodes the set of all nodes that are
+    // successors of any of the nodes that are encoded in the bitset
+    // 'set'.
+    boost::dynamic_bitset<> image(const boost::dynamic_bitset<>& set) const;
 
     friend bool operator==(const BitGraph &bg1, const BitGraph &bg2);
 private:

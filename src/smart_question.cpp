@@ -9,7 +9,7 @@
 
 Question::Question(unsigned dom_size) :
     antichain(),
-    domain_size(dom_size)
+    size(dom_size)
 {
     antichain.reserve(dom_size);
     for (unsigned i = 0; i < dom_size; i++) {
