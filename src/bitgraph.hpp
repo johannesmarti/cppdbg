@@ -71,13 +71,23 @@ public:
         return bits.to_ulong();
     }
 
-    boost::dynamic_bitset<> successors_of(Node i) const {
-        // TODO: There should be a better way of doing this! The problem
-        // now is that we first shift, which creates a copy of a large
-        // size and then immediately resize!
-        assert(this->contains_node(i));
-        boost::dynamic_bitset<> res = bits >> (i * num_nodes);
+    boost::dynamic_bitset<> successors_of(Node v) const {
+        assert(this->contains_node(v));
+
+        // I am not sure what is the right way of implementing this!
+        const Size s = this->size();
+        boost::dynamic_bitset<> res(s);
+        const Size offset = v * num_nodes;
+        for (unsigned i = 0; i < s; i++) {
+            res[i] = bits[offset + i];
+        }
+        /*
+        // This code is less efficient, probabely because it allocates
+        // too much memory.
+        boost::dynamic_bitset<> res = bits >> (v * num_nodes);
         res.resize(num_nodes);
+        */
+
         return res;
     }
 

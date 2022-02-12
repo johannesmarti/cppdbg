@@ -21,6 +21,13 @@ add_executable(range
   src/labeled_bitgraph.cpp
   src/bitgraph.cpp
 )
+add_executable(smart_range
+  src/smart_range.cpp
+  src/smart_construction_determinism.cpp
+  src/smart_question.cpp
+  src/labeled_bitgraph.cpp
+  src/bitgraph.cpp
+)
 
 
 find_package (Boost COMPONENTS unit_test_framework REQUIRED)
