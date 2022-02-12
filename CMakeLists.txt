@@ -6,11 +6,22 @@ project(cppdbg)
 set(CMAKE_CXX_STANDARD 20)
 set(CMAKE_CXX_STANDARD_REQUIRED True)
 
-include_directories(src)
-file(GLOB SOURCES "src/*.cpp")
-add_executable(play ${SOURCES})
+set(CMAKE_CXX_FLAGS "-Wall -O2 -DNDEBUG")
+#set(CMAKE_CXX_FLAGS "-Wall -Wextra")
 
-#add_dependencies(play ${SOURCES})
+include_directories(src)
+add_executable(play
+  src/play.cpp
+  src/bitgraph.cpp
+)
+add_executable(range
+  src/range.cpp
+  src/construction_determinism.cpp
+  src/question.cpp
+  src/labeled_bitgraph.cpp
+  src/bitgraph.cpp
+)
+
 
 find_package (Boost COMPONENTS unit_test_framework REQUIRED)
 #set (Boost_USE_STATIC_LIBS OFF)

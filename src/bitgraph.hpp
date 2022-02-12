@@ -66,7 +66,7 @@ public:
     }
 
     unsigned long to_ulong() const {
-        Size s = size();
+        const Size s = size();
         assert(num_bits<unsigned long> >= s*s);
         return bits.to_ulong();
     }

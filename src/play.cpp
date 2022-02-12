@@ -2,7 +2,6 @@
 
 #include <boost/dynamic_bitset.hpp>
 
-#include "question.hpp"
 #include "bitgraph.hpp"
 
 using namespace std;
