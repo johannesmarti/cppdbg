@@ -135,7 +135,7 @@ inline std::ostream& operator<<(std::ostream& os, const BitGraph& bg)
 }
 
 // Composition of two relations. For efficiency reasons it is assumed
-// that the complier si smart enough not to copy the return value.
+// that the complier is smart enough not to copy the return value.
 BitGraph compose(const BitGraph& a, const BitGraph& b);
 
 BitGraph diagonal(Size s);
